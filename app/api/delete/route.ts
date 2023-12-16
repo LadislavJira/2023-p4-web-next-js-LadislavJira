@@ -4,7 +4,7 @@ import prisma from "@/lib/prismaHelper";
 //Type "NextApiRequest" is not a valid type for the function's first argument.
 export async function DELETE(req: any, res: NextApiResponse) {
     try {
-        const { id } = req.body;
+        const { id } = await req.json()
 
         if (!id) {
             return new Response(

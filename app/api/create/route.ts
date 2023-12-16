@@ -5,7 +5,7 @@ import prisma from "@/lib/prismaHelper";
 
 export  async function POST(req: any, res: NextApiResponse) {
     try {
-      const { title, author, genre, published, description } = await req.body;
+      const { title, author, genre, published, description } = await req.json()
   
       if (!title || !author || !genre || !published || !description) {
         return new Response(
@@ -15,13 +15,12 @@ export  async function POST(req: any, res: NextApiResponse) {
           })
         );
       }
-  
       const book = await prisma.book.create({
         data: {
           title,
           author,
           genre,
-          published,
+          published: parseInt(published, 10),
           description,
         },
       });
@@ -43,3 +42,4 @@ export  async function POST(req: any, res: NextApiResponse) {
       );
     }
   }
+

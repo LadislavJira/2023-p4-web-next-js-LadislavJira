@@ -1,11 +1,13 @@
 import { NextApiRequest, NextApiResponse } from "next";
+import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prismaHelper";
 
 //Type "NextApiRequest" is not a valid type for the function's first argument.
-export async function GET(req: any, res: NextApiResponse) {
+export async function GET(req: NextRequest, res: NextApiResponse) {
     try {
-        const { id } = req.query;
-
+        //const id =  1;
+        const { searchParams } = new URL(req.url)
+        const id = searchParams.get('id')
         if (!id) {
             return new Response(
                 JSON.stringify({

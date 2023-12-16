@@ -1,8 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import prisma from "@/lib/prismaHelper";
 
-//Type "NextApiRequest" is not a valid type for the function's first argument.
-export async function GET(req: any, res: NextApiResponse) {
+export async function GET(req: NextApiRequest, res: NextApiResponse) {
   try {
     const books = await prisma.book.findMany({
       select: {
@@ -15,9 +14,20 @@ export async function GET(req: any, res: NextApiResponse) {
       },
     });
 
-    res.status(200).json(books);
+    return new Response(JSON.stringify(books), {
+      status: 200,
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Server error" });
+
+    return new Response(JSON.stringify({ message: "Server error" }), {
+      status: 500,
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
   }
 }

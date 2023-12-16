@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import prisma from "@/lib/prismaHelper";
 
-export async function GET(req: NextApiRequest, res: NextApiResponse) {
+export async function GET(/*req: NextApiRequest,*/ res: NextApiResponse) {
   try {
     const books = await prisma.book.findMany({
       select: {

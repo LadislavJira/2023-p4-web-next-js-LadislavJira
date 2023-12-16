@@ -1,6 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import prisma from "@/lib/prismaHelper";
 
+//Type "NextApiRequest" is not a valid type for the function's first argument.
 export async function GET(req: any, res: NextApiResponse) {
   try {
     const books = await prisma.book.findMany({

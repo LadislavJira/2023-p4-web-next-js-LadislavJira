@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import prisma from "@/lib/prismaHelper";
 
-export default async function POST(req: NextApiRequest, res: NextApiResponse) {
+export  async function POST(req: NextApiRequest, res: NextApiResponse) {
     try {
       const { title, author, genre, published, description } = await req.body;
   

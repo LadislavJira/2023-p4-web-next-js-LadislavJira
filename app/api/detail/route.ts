@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prismaHelper";
 
 //Type "NextApiRequest" is not a valid type for the function's first argument.
-export async function GET(req: NextRequest, res: NextApiResponse) {
+export async function GET(req: NextRequest/*, res: NextApiResponse*/) {
     try {
         //const id =  1;
         const { searchParams } = new URL(req.url)

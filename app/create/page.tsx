@@ -11,7 +11,7 @@ export default function CreatePage(){
         const description = e.currentTarget.description.value
         console.log(title, author, genre, published, description)
 
-        await fetch('/api/create', {
+        await fetch("/api/create", {
             method: "POST",
             body: JSON.stringify({
                 title,

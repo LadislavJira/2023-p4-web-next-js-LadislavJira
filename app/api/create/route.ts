@@ -3,7 +3,7 @@ import prisma from "@/lib/prismaHelper";
 
 //Type "NextApiRequest" is not a valid type for the function's first argument.
 
-export  async function POST(req: any, res: NextApiResponse) {
+export  async function POST(req: any, /*res: NextApiResponse*/) {
     try {
       const { title, author, genre, published, description } = await req.json()
   

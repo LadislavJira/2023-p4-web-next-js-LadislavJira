@@ -31,7 +31,7 @@ export default function BookDetail({ params}: PageProps) {
     if(book == null)
     return(
         <>
-        <h1>This book doesn't exist</h1>
+        <h1>This book doesn`&apos;`t exist</h1>
   
         <Link href="/books">Go back to ReadList</Link>
       </>

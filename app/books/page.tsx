@@ -27,7 +27,7 @@ export default function Books() {
     };
 
       const deleteBook = async (id: number) => {
-        await fetch('/api/delete', {
+        await fetch("/api/delete", {
             method: "DELETE",
             body: JSON.stringify({
                 id
@@ -55,7 +55,7 @@ export default function Books() {
     if(books.length == 0)
     return(
         <>
-        <h1>There aren't any books yet</h1>
+        <h1>There aren`&apos;`t any books yet</h1>
         <br></br>
         <Link href="/create">
           Add some!

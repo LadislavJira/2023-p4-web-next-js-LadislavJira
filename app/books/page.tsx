@@ -3,14 +3,19 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Book from "@/types/Book"
 import Link from "next/link";
+import Button from "@/components/button";
+import Container from "@/components/CenteredContainer"
+import Heading from "@/components/Heading"
+import BookFrame from "@/components/BookContainer"
+import BookHeading from "@/components/BookHeading"
 
 export default function Books() {
 
     const [books, setBooks] = useState<Book[]>([]);
     const [error, setError] = useState<string | null>(null);
+    const [success, setSuccess] = useState<boolean>(false);
     const router = useRouter();
     useEffect(() => {
-
         fetch("/api/all")
         .then((response) => response.json())
         .then((data) => {
@@ -18,14 +23,18 @@ export default function Books() {
             if(data.message){
                 setError(data.message)
             }
+            setSuccess(true);
         })
+        
     }, []);
 
 
     const goToDetail = (id: number) => {
         router.push(`/books/${id}`);
     };
-
+    const Redirect = (page: string) => {
+      router.push(page);
+  };
       const deleteBook = async (id: number) => {
         await fetch("/api/delete", {
             method: "DELETE",
@@ -41,50 +50,56 @@ export default function Books() {
             }
         })
     };
+    if(success == false)
+      return(
+        <Container>
+          <Heading>Loading screen TBD</Heading>
+        </Container>
+
+    );
 
     if(error != null)
       return(
-        <>
-        <h1 style={{ color: "red" }}>{error}</h1>
-        <br></br>
-        <Link href="/">
-          Go back
-        </Link>
-        </>
+        <Container>
+          <Heading color="red">{error}</Heading>
+          <br></br>
+          <Button type="button" size="large" color="black" onClick={() => Redirect("/")}>Go back</Button>
+        </Container>
     )
-    if(books.length == 0)
+    if(success == true && books.length == 0)
     return(
-        <>
-        <h1>There aren`&apos;`t any books yet</h1>
+        <Container>
+          <Heading>There aren&apos;t any books yet</Heading>
         <br></br>
-        <Link href="/create">
-          Add some!
-        </Link>
-        </>
+
+          <Button type="button" size="large" color="green" onClick={() => Redirect("/create")}>Create</Button>
+        </Container>
         )
     return(
         <>
-        <h1>My ReadList</h1>
+        <Container>
+          <Heading>My ReadList</Heading>
 
 
-          {books.map((book) => (
-            <div key={book.id}>
+            {books.map((book) => (
+              <BookFrame key={book.id}>
 
-            
-                <p>{book.title}</p>
-                <button onClick={() => goToDetail(book.id)} >Details</button>
-                <button onClick={() => deleteBook(book.id)} >Delete</button>
-            </div>
-          ))}
+              
+                  <BookHeading>{book.title}</BookHeading>
+                  <div>
+                    <Button type="button" size="small" color="blue" onClick={() => goToDetail(book.id)}>Detail</Button>
+                    <Button type="button" size="small" color="red" onClick={() => deleteBook(book.id)}>Delete</Button>
+                  </div>
 
-        <br></br>
-        <Link href="/create">
-          Add some more!
-        </Link>
-        <br></br>
-        <Link href="/">
-          Go back
-        </Link>
+              </BookFrame >
+            ))}
+
+          <br></br>
+          <Button type="button" size="large" color="green" onClick={() => Redirect("/create")}>Create</Button>
+          <br></br>
+
+          <Button type="button" size="large" color="black" onClick={() => Redirect("/")}>Go back</Button>
+        </Container>
         </>
     )
 }
